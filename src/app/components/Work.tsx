@@ -633,8 +633,8 @@ export function Work({ onClose }: { onClose?: () => void }) {
       const container = scrollContainerRef.current;
       if (!container) return;
 
-      // Check if user is scrolling up and already at the top
-      if (e.deltaY < 0 && container.scrollTop === 0) {
+      // Check if user is scrolling up and already at the top, and no project is open
+      if (e.deltaY < 0 && container.scrollTop === 0 && !selectedProject) {
         onClose();
       }
     };
@@ -644,7 +644,7 @@ export function Work({ onClose }: { onClose?: () => void }) {
       container.addEventListener('wheel', handleScroll, { passive: true });
       return () => container.removeEventListener('wheel', handleScroll);
     }
-  }, [onClose]);
+  }, [onClose, selectedProject]);
 
   return (
     <div ref={scrollContainerRef} className="overlay-dark h-screen bg-transparent px-4 md:px-6 py-6 md:py-8 overflow-y-auto">
