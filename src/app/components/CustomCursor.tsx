@@ -6,7 +6,12 @@ export function CustomCursor() {
   const [mousePosition, setMousePosition] = React.useState({ x: 0, y: 0 });
   const [isHovering, setIsHovering] = React.useState(false);
   const [cursorColor, setCursorColor] = React.useState({ ring: '#2d2419', dot: '#2d2419' });
+  const [isTouchDevice, setIsTouchDevice] = React.useState(false);
   const { theme } = useTheme();
+
+  React.useEffect(() => {
+    setIsTouchDevice(window.matchMedia('(pointer: coarse)').matches);
+  }, []);
 
   React.useEffect(() => {
     const updateMousePosition = (e: MouseEvent) => {
@@ -83,6 +88,8 @@ export function CustomCursor() {
       window.removeEventListener('mouseover', handleMouseOver);
     };
   }, [theme]);
+
+  if (isTouchDevice) return null;
 
   return (
     <>
